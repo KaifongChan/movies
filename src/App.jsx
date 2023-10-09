@@ -9,11 +9,6 @@ import Contents from './components/Contents';
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userDetails, setUserDetails] = useState({ firstName: "", lastName: "" });
-  const [permanentUserDetails, setPermanentUserDetails] = useState("");
-
-  // if (loggedIn) {
-  //   setPermanentUserDetails(userDetails);
-  // }
 
   const submitFunction = (evt) => {
     // evt.preventdefault();
@@ -23,9 +18,11 @@ function App() {
     switch (loggedIn) {
       case false:
         setLoggedIn(true);
+        document.querySelector("#formDiv").style.display = 'none';
         break;
       case true:
         setLoggedIn(false);
+        document.querySelector("#formDiv").style.display = 'block';
         break;
     }
   }
@@ -47,7 +44,7 @@ function App() {
 
   return (
     <>
-      <Header submitFunction={submitFunction} handleFirstInput={handleFirstInput} handleLastInput={handleLastInput} />
+      <Header submitFunction={submitFunction} handleFirstInput={handleFirstInput} handleLastInput={handleLastInput} loggedStatus={loggedIn} />
       {/* Not logged in --> Shows default page  . Logged in --> Shows different page with logged in features such as view profile */}
       {!loggedIn ?
         <section>
@@ -71,13 +68,13 @@ function App() {
 
 function Header({ submitFunction, handleFirstInput, handleLastInput }) {
   return (
-    <>
+    <div id="formDiv">
       <input type="text" id='firstName' name='firstName' placeholder='First Name' required onChange={handleFirstInput} />
       <br />
       <input type="text" id='lastName' name='lastName' placeholder='Last Name' required onChange={handleLastInput} />
       <br />
       <button onClick={submitFunction}>Submit</button>
-    </>
+    </div>
   )
 }
 
